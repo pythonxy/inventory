@@ -1,0 +1,33 @@
+<html>
+	<head>
+		<title>Database</title>
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+		<script src="js/getdata.js"></script>
+		<script src="js/clear-icon.js"></script>
+		<link rel="stylesheet" href="css/style.css" type="text/css" />
+	</head>
+	
+	<body>
+		<div class="data" ng-app="sqlApp" ng-controller="sqlCtrl">
+			<div class="top">
+				<table>
+					<tr>
+						<th id="filter_name">Filter Name: <input class="clearable" type="text" ng-model="name" clear-icon></th>
+						<th id="filter_part">Filter Part: <input class="clearable" type="text" ng-model="part" clear-icon></th>
+					</tr>
+				</table>
+			</div>
+			<div class="bottom">
+				<table>
+					<tr class="data" ng-repeat="list in myList | filter : {'name' : name, 'part' : part}">
+						<td>{{list.name}}</td>
+						<td>{{list.part}}</td>
+						<td>{{list.material}}</td>
+						<td id="qty">{{list.qty}}</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

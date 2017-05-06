@@ -1,0 +1,19 @@
+<html>
+	<head>
+		<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+		<script src = "js/upload.js"></script>
+	</head>
+   
+	<body>
+		<div ng-app = "myApp" ng-controller = "myCtrl">
+			<form ng-submit="uploadFile()">
+				<input id="uploader" type = "file" file-model = "myFile" required/>
+				<input type="submit" />
+			</form>
+			<br>
+			<p>
+				<strong>{{upMSG}}</strong><br>
+				<strong>{{doneMSG}}</strong></p>
+		</div>
+	</body>
+</html>
