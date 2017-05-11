@@ -6,10 +6,11 @@
 		<script src="js/getdata.js"></script>
 		<script src="js/clear-icon.js"></script>
 		<link rel="stylesheet" href="css/style.css" type="text/css" />
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 	</head>
 	
 	<body>
-		<div class="data" ng-app="sqlApp" ng-controller="sqlCtrl">
+		<div class="getData" ng-app="sqlApp" ng-controller="sqlCtrl">
 			<div class="top">
 				<table>
 					<tr>
@@ -19,12 +20,20 @@
 				</table>
 			</div>
 			<div class="bottom">
-				<table>
+				<table class="w3-hoverable">
+					<thead>
+						<tr class="data">
+							<th id="title">Name</th>
+							<th id="title">Part No.</th>
+							<th id="title">Material No.</th>
+							<th class="title qty">QTY</th>
+						</tr>
+					</thead>
 					<tr class="data" ng-repeat="list in myList | filter : {'name' : name, 'part' : part}">
 						<td>{{list.name}}</td>
 						<td>{{list.part}}</td>
 						<td>{{list.material}}</td>
-						<td id="qty">{{list.qty}}</td>
+						<td class="qty">{{list.qty}}</td>
 					</tr>
 				</table>
 			</div>
