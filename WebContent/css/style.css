@@ -11,7 +11,7 @@ div.bottom {
 	float: left;
 	overflow: auto;
 	width: 100%;
-	height: 95%;
+	height: 93%;
 }
 
 table {
@@ -22,14 +22,14 @@ table {
 	table-layout: auto;
 }
 
-th.data, td {
+tr.data, th.data, th#title, td {
 	text-align: left;
 	padding: 8px;
 }
 
-tr:nth-child(even) { background-color: #dbdbdb; }
+tr:nth-child(even) { background-color: #efefef; }
 
-td#qty { text-align: right; }
+th.qty, td.qty { text-align: right; }
 
 th#filter_name { text-align: center; }
 
