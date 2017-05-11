@@ -32,6 +32,16 @@ public class ParseExcelToSQL {
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection(URL, USER, PWD);
 			stmt = c.createStatement();
+			
+			// Overwrite all data by dropping table
+			sql = "DROP TABLE IF EXISTS INV_DATA CASCADE;;"
+					+ "CREATE TABLE INV_DATA ("
+					+ "NAME VARCHAR(255),"
+				    + "PART VARCHAR(255),"
+					+ "MATERIAL VARCHAR(255),"
+					+ "QTY INT);"
+					+ "GRANT ALL PRIVILEGES ON TABLE INV_DATA TO INVENTORY;";
+			stmt.executeUpdate(sql);
 
 			FileInputStream file = new FileInputStream(new File(filePath));
 			// File filePath = new
@@ -144,8 +154,8 @@ public class ParseExcelToSQL {
 														partQty = (int) qty.getNumericCellValue();
 														System.out.println(name + "\t" + namePart + "\t" + nameMaterial
 																+ "\t" + partQty);
-
-														sql = "INSERT INTO INV_2016 (Name, Part, Material, QTY)"
+														
+														sql = "INSERT INTO INV_DATA (Name, Part, Material, QTY)"
 																+ "VALUES ('" + name + "', '" + namePart + "', '"
 																+ nameMaterial + "', '" + partQty + "');";
 														stmt.executeUpdate(sql);
