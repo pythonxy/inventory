@@ -36,7 +36,7 @@ public class GetData extends HttpServlet {
 			c = DriverManager.getConnection(URL, USER, PWD);
 			stmt = c.createStatement();
 
-			sql = "SELECT * FROM INV_2016" + " ORDER BY NAME";
+			sql = "SELECT * FROM INV_DATA" + " ORDER BY NAME";
 
 			ResultSet rs = stmt.executeQuery(sql);
 			// ResultSetMetaData rsmd = rs.getMetaData();
