@@ -10,6 +10,10 @@
 		<servlet-name>getData</servlet-name>
 		<servlet-class>GetData</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>updateSQL</servlet-name>
+		<servlet-class>GetUpdatedData</servlet-class>
+	</servlet>
 	<session-config>
 		<session-timeout>30</session-timeout>
 	</session-config>
