@@ -28,19 +28,22 @@ public class ParseExcelToSQL {
 			String URL = "jdbc:postgresql://b6inventory:5432/inventory";
 			String USER = "inventory";
 			String PWD = "inventory";
+			String db = "INV_TEST2";
 
 			Class.forName("org.postgresql.Driver");
 			c = DriverManager.getConnection(URL, USER, PWD);
 			stmt = c.createStatement();
 			
 			// Overwrite all data by dropping table
-			sql = "DROP TABLE IF EXISTS INV_DATA CASCADE;;"
-					+ "CREATE TABLE INV_DATA ("
+			sql = "DROP TABLE IF EXISTS " + db + " CASCADE;"
+					+ "CREATE TABLE " + db + " ("
+					+ "ID SERIAL,"
 					+ "NAME VARCHAR(255),"
 				    + "PART VARCHAR(255),"
 					+ "MATERIAL VARCHAR(255),"
+				    + "BATCH VARCHAR(255),"
 					+ "QTY INT);"
-					+ "GRANT ALL PRIVILEGES ON TABLE INV_DATA TO INVENTORY;";
+					+ "GRANT ALL PRIVILEGES ON TABLE " + db + " TO INVENTORY;";
 			stmt.executeUpdate(sql);
 
 			FileInputStream file = new FileInputStream(new File(filePath));
@@ -64,6 +67,8 @@ public class ParseExcelToSQL {
 			// for name
 			// int firstNameCol = 0, lastNameCol = 0, nameRow = 0, nameNext = 1;
 			String name, namePart, nameMaterial;
+			String nameBatch = null;
+			Cell batch = null;
 			int partQty = 0;
 			Cell qty = null;
 
@@ -151,13 +156,32 @@ public class ParseExcelToSQL {
 																.getRichStringCellValue().getString().trim();
 														nameMaterial = sheet.getRow(i).getCell(partCol + 1)
 																.getRichStringCellValue().getString().trim();
+														
+														batch = sheet.getRow(i).getCell(partCol + 2);
+														
+														// batch no. are mixing with empty, float, and string
+														switch (batch.getCellTypeEnum()) {
+															case NUMERIC:
+																Float tmp = (float) batch.getNumericCellValue();
+																nameBatch = Float.toString(tmp);
+																break;
+															case STRING:
+																nameBatch = batch.getRichStringCellValue().getString().trim();
+																break;
+															case BLANK:
+																nameBatch = "";
+																break;
+															default:
+																break;
+														}
+														
 														partQty = (int) qty.getNumericCellValue();
 														System.out.println(name + "\t" + namePart + "\t" + nameMaterial
 																+ "\t" + partQty);
 														
-														sql = "INSERT INTO INV_DATA (Name, Part, Material, QTY)"
+														sql = "INSERT INTO " + db + " (NAME, PART, MATERIAL, BATCH, QTY)"
 																+ "VALUES ('" + name + "', '" + namePart + "', '"
-																+ nameMaterial + "', '" + partQty + "');";
+																+ nameMaterial + "', '" + nameBatch + "', '" + partQty + "');";
 														stmt.executeUpdate(sql);
 													}
 												}
@@ -176,6 +200,13 @@ public class ParseExcelToSQL {
 				}
 			}
 
+			// copy all data except ID to public table.
+//			sql = "DROP TABLE IF EXISTS INV_PUBLIC CASCADE;"
+//					+ "CREATE TABLE INV_PUBLIC AS "
+//					+ "SELECT * FROM " + db + ";"
+//					+ "GRANT ALL PRIVILEGES ON TABLE INV_PUBLIC TO invpublic;";
+//
+//			stmt.executeUpdate(sql);
 			// part no start with ROW=6, COL(getCell)=9
 
 			// System.out.println("\n\npart row = " + firstPartRow);
