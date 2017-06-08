@@ -1,0 +1,134 @@
+<html>
+	<head>
+		<title>Database</title>
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+		<script type="text/javascript" src="js/manage.js"></script>
+		<script type="text/javascript" src="js/autocomplete.js"></script>
+		<script type="text/javascript" src="js/clear-icon.js"></script>
+		<link rel="stylesheet" href="css/style.css" type="text/css" />
+		<link rel="stylesheet" href="css/autocomplete.css" type="text/css" />
+		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="shortcut icon" href="favicon.ico" />
+	</head>
+	
+	<body>
+		<div class="getData" ng-app="sqlApp" ng-controller="editCtrl">
+			<div class="top">
+				<table>
+					<tr ng-hide="addMode" >
+						<th id="filter_name">Filter Name: <input class="clearable" type="text" ng-model="name" clear-icon></th>
+						<th id="filter_part">Filter Part: <input class="clearable" type="text" ng-model="part" clear-icon></th>
+						<th>
+							<button type="submit" ng-show="newData" ng-click="newData=false; update()" class="btn btn-default">Update</button>
+						</th>
+						<th>
+							<button type="submit" ng-hide="addMode || delMode" ng-click="addMode=true">New Entry</button>
+						</th>
+						<th>
+							<button type="submit" ng-hide="editMode || addMode || delMode" ng-click="delMode=true" class="btn btn-default">Delete Entry</button>
+						</th>
+						<th>
+							<button type="submit" ng-show="delConfirm" ng-click="delConfirm=true; newData=true; delField($index)" class="btn btn-default">Confirm</button>
+						</th>
+						<th>
+							<button type="submit" ng-show="delMode" ng-click="delMode=false" class="btn btn-default">Cancel</button>
+						</th>
+					</tr>
+				</table>
+			</div>
+			
+			<div class="bottom">
+				<div class="editNewData">
+					<table id="add">
+						<tr>
+							<th>
+	<!-- 							<select data-ng-model="nameData" data-ng-show="addMode"> -->
+	<!-- 								<option ng-repeat="n in autoName" value="{{n}}">{{n}}</option> -->
+	<!-- 							</select> -->
+								<autocomplete data-ng-model="nameData" data-ng-show="addMode" data="autoNames" attr-placeholder="Name"></autocomplete>
+							</th>
+							<th>
+								<autocomplete data-ng-model="partData" data-ng-show="addMode" data="autoParts" attr-placeholder="Part No."></autocomplete>
+							</th>
+							<th>
+								<autocomplete data-ng-model="matData" data-ng-show="addMode" data="autoMats" attr-placeholder="Material No."></autocomplete>
+							</th>
+							<th>
+								<input type="text" data-ng-show="addMode" data-ng-model="batchData" data-ng-required />
+							</th>
+							<th>
+								<input type="text" data-ng-show="addMode" data-ng-model="qtyData" data-ng-required />
+							</th>
+							<th>
+								<button type="submit" ng-show="addMode" ng-click="newData=true; addEntry()">Add</button>
+							</th>
+							<th>
+								<button type="submit" ng-show="addMode" ng-click="addMode=false">Done</button>
+							</th>
+							<th>
+								<button type="submit" ng-show="addMode" ng-click="addMode=false">Cancel</button>
+							</th>
+						</tr>
+					</table>
+				</div>
+				
+				<div>
+					<table class="w3-hoverable" ng-hide="addMode">
+						<thead>
+							<tr class="data">
+								<th></th>
+								<th id="title">Name</th>
+								<th id="title">Part No.</th>
+								<th id="title">Material No.</th>
+								<th id="title">Batch No.</th>
+								<th id="title">QTY</th>
+								<th id="title">Edit</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="data" ng-repeat="list in myList | filter : {'name' : name, 'part' : part}" ng-class="{ 'strikeout': $index == selIdx }">
+								<td>
+									<input ng-show="delMode" type="checkbox" ng-model="list.checked""/><i></i>
+								</td>
+								<td>
+									<span data-ng-hide="editMode">{{list.name}}</span>
+									<input type="text" data-ng-show="editMode" data-ng-model="list.name" data-ng-required />
+								</td>
+								<td>
+									<span data-ng-hide="editMode">{{list.part}}</span>
+									<input type="text" data-ng-show="editMode" data-ng-model="list.part" data-ng-required />
+								</td>
+								<td>
+									<span data-ng-hide="editMode">{{list.material}}</span>
+									<input type="text" data-ng-show="editMode" data-ng-model="list.material" data-ng-required />
+								</td>
+								<td>
+									<span data-ng-hide="editMode">{{list.batch}}</span>
+									<input type="text" data-ng-show="editMode" data-ng-model="list.batch" data-ng-required />
+								</td>
+								<td>
+									<span data-ng-hide="editMode">{{list.qty}}</span>
+									<input type="text" data-ng-show="editMode" data-ng-model="list.qty" data-ng-required />
+								</td>
+								<td>
+						            <button type="submit" data-ng-hide="addMode || delMode || editMode" data-ng-click="editMode=true; editData(list)" class="btn btn-default">Edit</button>
+						            <button type="submit" data-ng-show="editMode" ng-click="editMode=false; saveField()" class="btn btn-default">Save</button>
+						            <button type="submit" data-ng-show="editMode" data-ng-click="editMode=false; cancel()" class="btn btn-default">Cancel</button>
+						        </td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<table>
+					<pre>{{editMode}}</pre>
+<!-- 					<pre>{{newField|json}}</pre> -->
+					<pre>new Data:<br>{{newList|json}}</pre>
+<!-- 					<pre>{{tmpEntry|json}}</pre> -->
+<!-- 					<pre>{{myList|json}}</pre> -->
+<!-- 					<pre>{{autoNames}}</pre> -->
+				</table> 
+			</div>
+		</div>
+	</body>
+</html>
