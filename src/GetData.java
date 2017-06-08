@@ -22,7 +22,7 @@ public class GetData extends HttpServlet {
 	protected void processRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
-			ArrayList<jsonData> allItems = new ArrayList<>();
+			ArrayList<JsonData> allItems = new ArrayList<>();
 			DecimalFormat df = new DecimalFormat();
 			df.setMinimumFractionDigits(2);
 
@@ -55,7 +55,7 @@ public class GetData extends HttpServlet {
 				String batch = rs.getString("batch");
 				int qty = rs.getInt("qty");
 
-				allItems.add(new jsonData(id, name, part, material, batch, qty));
+				allItems.add(new JsonData(id, name, part, material, batch, qty));
 
 				// System.out.println(name + "\t" + part + "\t" + material +
 				// "\t" + qty);
