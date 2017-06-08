@@ -18,8 +18,8 @@ public class GetUpdatedData extends HttpServlet {
 			throws ServletException, IOException {
 		BufferedReader reader = request.getReader();
 
-		UpdateSQL pass = new UpdateSQL();
-		pass.UpdateSQL(reader);
+		UpdateSQL update = new UpdateSQL();
+		update.UpdateSQL(reader);
 	}
 
 	@Override
