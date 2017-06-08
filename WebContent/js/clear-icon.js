@@ -1,3 +1,5 @@
+// source: https://github.com/gangadharjannu/clear-icon
+
 angular.module('clearIconModule', []).directive('clearIcon', clearIconDirective);
 
 function clearIconDirective($compile) {
