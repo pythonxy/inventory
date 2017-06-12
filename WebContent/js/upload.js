@@ -32,7 +32,7 @@ app.service('fileUpload', [ '$http', function($http) {
 	};
 } ]);
 
-app.controller('myCtrl', [ '$scope', 'fileUpload',
+app.controller('uploadCtrl', [ '$scope', 'fileUpload',
 		function($scope, fileUpload) {
 			$scope.uploadFile = function() {
 				var file = $scope.myFile;
