@@ -1,14 +1,14 @@
-<html>
+<html ng-app="myApp" >
 	<head>
 		<title>Inventory Upload</title>
-		<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+		<script src = "https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 		<script src = "js/upload.js"></script>
 	</head>
    
 	<body>
-		<div ng-app = "myApp" ng-controller = "myCtrl">
+		<div ng-controller = "myCtrl">
 			<form ng-submit="uploadFile()">
-				<input id="uploader" type = "file" file-model = "myFile" required/>
+				<input id="uploader" type="file" file-model="myFile" required/>
 				<input type="submit" />
 				<br><br>
 				Note: All data will be overwrite.
@@ -16,7 +16,8 @@
 			<br>
 			<p>
 				<strong>{{upMSG}}</strong><br>
-				<strong>{{doneMSG}}</strong></p>
+				<strong>{{doneMSG}}</strong>
+			</p>
 		</div>
 	</body>
 </html>
