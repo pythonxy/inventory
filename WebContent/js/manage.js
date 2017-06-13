@@ -1,6 +1,6 @@
 var app = angular.module('myApp', [ 'autocomplete' ]);
 
-app.controller('editCtrl', function($scope, $http, $window, $location, $filter) { //, testService) {
+app.controller('manageCtrl', function($scope, $http, $window, $location, $filter) { //, testService) {
 	$http({
 		method : "GET",
 		url : "getData"
