@@ -1,4 +1,4 @@
-var app = angular.module('sqlApp', [ 'clearIconModule' ]);
+var app = angular.module('myApp', [ 'clearIconModule' ]);
 
 app.controller('sqlCtrl', function($scope, $http) {
 	$http({
