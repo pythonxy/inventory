@@ -100,7 +100,7 @@ public class UploadServlet extends HttpServlet {
 			// request.setAttribute("parts", "DONE");
 			response.setContentType("text/plain");
 			response.setCharacterEncoding("UTF-8");
-			response.getWriter().write("File uploaed. All data imported to database.");
+			response.getWriter().write("File uploaded. All data imported to database.");
 		} catch(Exception e) {
 			// request.setAttribute("message", "Error message: " +
 			// e.getMessage());
