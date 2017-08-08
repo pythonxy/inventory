@@ -1,44 +1,74 @@
 <html ng-app="myApp">
 	<head>
 		<title>Inventory Database</title>
-		<script
-			src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.js"></script>
+		<script	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>	
 		<script src="js/getdata.js"></script>
-		<script src="js/clear-icon.js"></script>
+		<script type="text/javascript" src="js/clear-icon.js"></script>
 		<link rel="stylesheet" href="css/style.css" type="text/css" />
 		<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+		<link rel="shortcut icon" href="favicon.ico" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
 	</head>
 	
 	<body>
-		<div class="getData" ng-controller="sqlCtrl">
-			<div class="top">
-				<table>
-					<tr>
-						<th id="filter_name">Filter Name: <input class="clearable" type="text" ng-model="name" clear-icon></th>
-						<th id="filter_part">Filter Part: <input class="clearable" type="text" ng-model="part" clear-icon></th>
-					</tr>
-				</table>
-			</div>
-			<div class="bottom">
-				<table class="w3-hoverable">
-					<thead>
-						<tr class="data">
-							<th id="title">Name</th>
-							<th id="title">Part No.</th>
-							<th id="title">Material No.</th>
-							<th id="title">Batch No.</th>
-							<th class="title qty">QTY</th>
-						</tr>
-					</thead>
-					<tr class="data" ng-repeat="list in myList | filter : {'name' : name, 'part' : part}">
-						<td>{{list.name}}</td>
-						<td>{{list.part}}</td>
-						<td>{{list.material}}</td>
-						<td>{{list.batch}}</td>
-						<td class="qty">{{list.qty}}</td>
-					</tr>
-				</table>
-			</div>
+		<div class="container" ng-controller="sqlCtrl">
+			<nav class="navbar navbar-toggleable-md bg-faded navbar-light" data-spy="affix">
+				<form class="form-inline">
+					<div class="collapse navbar-collapse">
+						<ul class="getdata navbar-nav mr-auto mt-2 mt-lg-0">
+							<li class="nav-item input-group has-feedback">
+								<span class="input-group-addon" id="filter_name">Filter Name</span>
+								<input class="clearable form-control" type="text" ng-model="name">
+								<span ng-if="params.text" ng-click="clearText()" class="glyphicon glyphicon-remove form-control-feedback" style="cursor: pointer; pointer-events: all;" uib-tooltip="clear">
+							</li>
+							<li class="nav-item input-group">
+								<span class="input-group-addon" id="filter_name">Filter Part</span>
+								<input class="clearable form-control" type="text" ng-model="part" clear-icon>
+							</li>
+						</ul>
+					</div>
+				</form>
+			</nav>
+			<div class="inv_data">
+					<table class="table table-hover table-striped table-responsive responsive-table text-left" ng-hide="addMode">
+						<thead>
+							<tr class="data">
+								<th></th>
+								<th class="col-sm-3" id="title">Name</th>
+								<th class="col-sm-4" id="title">Part No.</th>
+								<th class="col-sm-3" id="title">Material No.</th>
+								<th class="col-sm-2" id="title">Batch No.</th>
+								<th class="col-sm-2" id="title">QTY</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="data" ng-repeat="list in myList | filter : {'name' : name, 'part' : part}" ng-class="{ 'strikeout': $index == selIdx }">
+								<td>
+									<input ng-show="delMode" type="checkbox" ng-model="list.checked""/><i></i>
+								</td>
+								<td>
+									<span data-ng-hide="editMode">{{list.name}}</span>
+								</td>
+								<td>
+									<span data-ng-hide="editMode">{{list.part}}</span>
+								</td>
+								<td>
+									<span data-ng-hide="editMode">{{list.material}}</span>
+								</td>
+								<td>
+									<span data-ng-hide="editMode">{{list.batch}}</span>
+								</td>
+								<td>
+									<span data-ng-hide="editMode">{{list.qty}}</span>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
 		</div>
 	</body>
 </html>
